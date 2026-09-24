@@ -3,17 +3,18 @@ import { Link } from 'react-router-dom';
 import {
   Heart, Share2, Copy, ArrowRight, CheckCircle,
   Users, Target, Gift, Cake, GraduationCap,
-  Briefcase, Star, Sparkles, X, ExternalLink
+  Briefcase, Star, X, Calendar, Sparkles,
+  PartyPopper, Diamond, BookOpen
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const OCCASIONS = [
-  { id: 'birthday', label: 'Birthday', icon: '🎂', color: 'var(--rose-500)' },
-  { id: 'anniversary', label: 'Anniversary', icon: '💍', color: '#7c3aed' },
-  { id: 'wedding', label: 'Wedding', icon: '💒', color: 'var(--amber-500)' },
-  { id: 'graduation', label: 'Graduation', icon: '🎓', color: '#2563eb' },
-  { id: 'work-anniversary', label: 'Work Anniversary', icon: '💼', color: 'var(--teal-600)' },
-  { id: 'festival', label: 'Festival', icon: '🎉', color: 'var(--emerald-600)' },
+  { id: 'birthday',         label: 'Birthday',         Icon: Cake,           color: 'var(--navy-700)' },
+  { id: 'anniversary',      label: 'Anniversary',       Icon: Diamond,        color: '#7c3aed' },
+  { id: 'wedding',          label: 'Wedding',           Icon: Heart,          color: 'var(--gold-600)' },
+  { id: 'graduation',       label: 'Graduation',        Icon: GraduationCap,  color: '#2563eb' },
+  { id: 'work-anniversary', label: 'Work Anniversary',  Icon: Briefcase,      color: 'var(--navy-800)' },
+  { id: 'festival',         label: 'Festival',          Icon: Calendar,       color: 'var(--emerald-600)' },
 ];
 
 const CAUSES = [
@@ -23,10 +24,10 @@ const CAUSES = [
 const DONATION_AMOUNTS = [100, 250, 500, 1000];
 
 const ALLOCATION = [
-  { label: 'Education Resources', pct: 40, color: 'var(--teal-500)' },
-  { label: 'Learning Support', pct: 30, color: '#2563eb' },
-  { label: 'Digital Access', pct: 20, color: '#7c3aed' },
-  { label: 'Programme Support', pct: 10, color: 'var(--amber-500)' },
+  { label: 'Education Resources', pct: 40, color: 'var(--navy-700)' },
+  { label: 'Learning Support',    pct: 30, color: '#2563eb' },
+  { label: 'Digital Access',      pct: 20, color: '#7c3aed' },
+  { label: 'Programme Support',   pct: 10, color: 'var(--gold-600)' },
 ];
 
 export default function GivePage() {
@@ -59,7 +60,7 @@ export default function GivePage() {
         setDonateAmount(500);
         setCustomAmount('');
       }, 3000);
-      addToast({ type: 'success', title: '🎉 Thank you!', message: `₹${finalAmount.toLocaleString('en-IN')} donated to ${campaignData.name}` });
+      addToast({ type: 'success', title: 'Thank you!', message: `₹${finalAmount.toLocaleString('en-IN')} donated to ${campaignData.name}` });
     }, 1500);
   }
 
@@ -109,16 +110,21 @@ export default function GivePage() {
             <h2 className="section-title">What are you celebrating?</h2>
           </div>
           <div className="grid-3" style={{ gap: '1rem' }}>
-            {OCCASIONS.map(occ => (
-              <div
-                key={occ.id}
-                className={`occasion-card ${selectedOccasion === occ.id ? 'selected' : ''}`}
-                onClick={() => { setSelectedOccasion(occ.id); setShowCreateForm(true); setCreateForm(f => ({ ...f, occasion: occ.label })); }}
-              >
-                <span style={{ fontSize: '2rem' }}>{occ.icon}</span>
-                <span style={{ fontWeight: 600, color: 'var(--slate-700)', fontSize: '0.9375rem' }}>{occ.label}</span>
-              </div>
-            ))}
+            {OCCASIONS.map(occ => {
+              const { Icon } = occ;
+              return (
+                <div
+                  key={occ.id}
+                  className={`occasion-card ${selectedOccasion === occ.id ? 'selected' : ''}`}
+                  onClick={() => { setSelectedOccasion(occ.id); setShowCreateForm(true); setCreateForm(f => ({ ...f, occasion: occ.label })); }}
+                >
+                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-lg)', background: 'var(--navy-50)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: occ.color }}>
+                    <Icon size={22} />
+                  </div>
+                  <span style={{ fontWeight: 600, color: 'var(--slate-700)', fontSize: '0.9375rem' }}>{occ.label}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -188,7 +194,7 @@ export default function GivePage() {
             <div className="card" style={{ padding: '2rem' }}>
               <div className="flex items-center justify-between" style={{ flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
                 <div>
-                  <span className="badge badge-teal" style={{ marginBottom: '0.5rem' }}>🎂 Birthday Campaign</span>
+                  <span className="badge badge-navy" style={{ marginBottom: '0.5rem' }}>Birthday Campaign</span>
                   <h2 style={{ margin: 0 }}>{campaignData.name}</h2>
                 </div>
                 <div className="demo-label">Prototype • Demonstration Data</div>
@@ -199,7 +205,7 @@ export default function GivePage() {
               {/* Progress */}
               <div style={{ marginBottom: '1.5rem' }}>
                 <div className="flex items-center justify-between" style={{ marginBottom: '0.5rem' }}>
-                  <span style={{ fontWeight: 700, fontSize: '1.5rem', color: 'var(--teal-700)' }}>
+                  <span style={{ fontWeight: 700, fontSize: '1.5rem', color: 'var(--navy-700)' }}>
                     ₹{campaignData.raised.toLocaleString('en-IN')}
                   </span>
                   <span style={{ color: 'var(--slate-500)', fontSize: '0.9375rem' }}>
@@ -300,8 +306,9 @@ export default function GivePage() {
                   />
                 </div>
 
-                <div style={{ padding: '0.875rem', background: '#fffbeb', border: '1px solid #fde68a', borderRadius: 'var(--radius-md)', marginBottom: '1.25rem', fontSize: '0.8125rem', color: '#92400e' }}>
-                  ⚠️ <strong>Payment simulation — prototype only.</strong> No real payment will be processed.
+                <div style={{ padding: '0.875rem', background: '#fffbeb', border: '1px solid #fde68a', borderRadius: 'var(--radius-md)', marginBottom: '1.25rem', fontSize: '0.8125rem', color: '#92400e', display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
+                  <Target size={14} style={{ flexShrink: 0, marginTop: 1 }} />
+                  <span><strong>Payment simulation — prototype only.</strong> No real payment will be processed.</span>
                 </div>
 
                 <button
@@ -318,8 +325,10 @@ export default function GivePage() {
               </>
             ) : (
               <div className="text-center" style={{ padding: '1rem 0' }}>
-                <div style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>❤️</div>
-                <h3 style={{ color: 'var(--teal-700)', marginBottom: '0.75rem' }}>Thank you for creating impact!</h3>
+                <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'var(--navy-50)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem' }}>
+                  <Heart size={28} color="var(--navy-700)" fill="var(--navy-100)" />
+                </div>
+                <h3 style={{ color: 'var(--navy-800)', marginBottom: '0.75rem' }}>Thank you for creating impact!</h3>
                 <p>Your contribution of <strong>₹{finalAmount.toLocaleString('en-IN')}</strong> has been added to the campaign.</p>
                 <div className="demo-label" style={{ display: 'inline-flex', marginTop: '1.25rem' }}>
                   Simulated Payment — Prototype Only

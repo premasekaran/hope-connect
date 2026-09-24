@@ -10,37 +10,40 @@ const OPPORTUNITIES = [
   {
     id: 1,
     title: 'Python Mentor',
-    icon: '🐍',
+    Icon: Code,
     color: '#2563eb',
     bg: '#eff6ff',
+    border: '#bfdbfe',
     category: 'Youth Education',
     commitment: '2 hrs/week',
     students: 10,
     sessions: '4 sessions',
-    description: 'Guide students in Python programming fundamentals, helping them build projects and develop technical thinking skills.',
+    description: 'Guide students in Python programming fundamentals, helping them build projects and develop technical problem-solving skills.',
     skills: ['Python', 'Programming', 'Teaching'],
     level: 'Intermediate',
   },
   {
     id: 2,
     title: 'Resume Mentor',
-    icon: '📄',
+    Icon: FileText,
     color: '#7c3aed',
     bg: '#faf5ff',
+    border: '#e9d5ff',
     category: 'Employability',
     commitment: '1 hr/week',
     students: 10,
     sessions: null,
-    description: 'Help youth craft compelling resumes and prepare for job interviews, opening doors to employment opportunities.',
+    description: 'Help young job-seekers craft compelling resumes and prepare for interviews, opening doors to employment opportunities.',
     skills: ['HR', 'Career Coaching', 'Communication'],
     level: 'Any',
   },
   {
     id: 3,
     title: 'Digital Marketing Support',
-    icon: '📣',
-    color: 'var(--amber-500)',
-    bg: '#fffbeb',
+    Icon: Megaphone,
+    color: 'var(--gold-600)',
+    bg: 'var(--gold-50)',
+    border: 'var(--gold-400)',
     category: 'Fundraising',
     commitment: '3 hrs/month',
     students: null,
@@ -52,14 +55,15 @@ const OPPORTUNITIES = [
   {
     id: 4,
     title: 'Spoken English Mentor',
-    icon: '🗣️',
-    color: 'var(--teal-600)',
-    bg: 'var(--teal-50)',
+    Icon: MessageSquare,
+    color: 'var(--navy-700)',
+    bg: 'var(--navy-50)',
+    border: 'var(--navy-200)',
     category: 'Education',
     commitment: '2 sessions/month',
     students: 15,
     sessions: '2 sessions/month',
-    description: 'Build communication confidence in youth through structured spoken English sessions and practice conversations.',
+    description: 'Build communication confidence in youth through structured spoken English sessions and conversation practice.',
     skills: ['Communication', 'English', 'Teaching'],
     level: 'Any',
   },
@@ -137,15 +141,17 @@ export default function SkillsPage() {
             <h2 className="section-title">Skills needed right now</h2>
           </div>
           <div className="grid-2" style={{ gap: '1.25rem' }}>
-            {OPPORTUNITIES.map(opp => (
+            {OPPORTUNITIES.map(opp => {
+              const OppIcon = opp.Icon;
+              return (
               <div key={opp.id} className="card" style={{ position: 'relative' }}>
                 <div className="flex items-center gap-3" style={{ marginBottom: '1rem' }}>
-                  <div style={{ width: 52, height: 52, background: opp.bg, borderRadius: 'var(--radius-lg)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', flexShrink: 0 }}>
-                    {opp.icon}
+                  <div style={{ width: 52, height: 52, background: opp.bg, border: `1px solid ${opp.border}`, borderRadius: 'var(--radius-lg)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: opp.color }}>
+                    <OppIcon size={22} />
                   </div>
                   <div>
                     <h4 style={{ margin: '0 0 0.2rem' }}>{opp.title}</h4>
-                    <span className="badge" style={{ background: opp.bg, color: opp.color }}>{opp.category}</span>
+                    <span className="badge" style={{ background: opp.bg, color: opp.color, border: `1px solid ${opp.border}` }}>{opp.category}</span>
                   </div>
                 </div>
                 <p style={{ fontSize: '0.9rem', marginBottom: '1rem', lineHeight: 1.6 }}>{opp.description}</p>
@@ -175,8 +181,10 @@ export default function SkillsPage() {
                 <button className="btn btn-primary btn-sm" onClick={() => handleApply(opp)}>
                   I Can Help <ChevronRight size={14} />
                 </button>
-              </div>
-            ))}
+                </div>
+              );
+            })}
+
           </div>
         </div>
       </section>
